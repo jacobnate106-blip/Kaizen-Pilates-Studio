@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-ink: #1C2430;
+  --color-charcoal: #2F3B4A;
+  --color-slate: #4A5665;
+  --color-silver: #A7B0BA;
+  --color-stone: #DAD5CF;
+  --color-frost: #F2F4F6;
+
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost", system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Architectural Arch curve utilities */
+  .arch-top {
+    border-top-left-radius: 12rem;
+    border-top-right-radius: 12rem;
+  }
+
+  .arch-frame {
+    border-radius: 12rem 12rem 0 0;
+  }
+}

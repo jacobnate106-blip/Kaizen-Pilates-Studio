@@ -1,0 +1,6 @@
+{
+  "name": "KAIZEN Pilates Studio",
+  "description": "Boutique Pilates studio in Lorton, VA. Built around precision, progress, and a calmer, more intentional approach to movement.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
