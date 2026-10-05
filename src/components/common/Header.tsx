@@ -3,13 +3,13 @@ import { useRouter } from '../../context/RouterContext';
 import { useTheme } from '../../context/ThemeContext';
 import { NavItem, RoutePath } from '../../types';
 import { BrandLogo } from './BrandLogo';
+import { BookingButton } from './BookingButton';
 
+// Non-negotiable top navigation menu: Home · Our Story · Private Sessions · Contact
 const NAV_ITEMS: NavItem[] = [
   { label: 'Home', path: '/' },
-  { label: 'Who We Are', path: '/who-we-are' },
-  { label: 'Schedule', path: '/schedule' },
-  { label: 'Studio Policies', path: '/studio-policies' },
-  { label: 'Getting Started', path: '/getting-started' },
+  { label: 'Our Story', path: '/our-story' },
+  { label: 'Private Sessions', path: '/private-sessions' },
   { label: 'Contact', path: '/contact' },
 ];
 
@@ -39,7 +39,7 @@ export const Header: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
-  const handleNavClick = (path: RoutePath) => {
+  const handleNavClick = (path: RoutePath | string) => {
     navigate(path);
     setMobileMenuOpen(false);
   };
@@ -53,39 +53,45 @@ export const Header: React.FC = () => {
       }`}
     >
       <div className="w-full max-w-[90rem] mx-auto px-[1.5rem] md:px-[3rem] py-[1rem] flex flex-row items-center justify-between">
-        {/* Zone 1: Brand Logo */}
+        {/* Logo: KAIZEN Pilates Studio */}
         <button
           onClick={() => handleNavClick('/')}
           className="flex flex-row items-center gap-[0.75rem] text-left group focus:outline-none focus-visible:ring-1 focus-visible:ring-slate py-1"
-          aria-label="KAIZEN Pilates Studios - Home"
+          aria-label="KAIZEN Pilates Studio - Home"
         >
           <BrandLogo className="h-10 md:h-12 w-auto text-ink dark:text-frost group-hover:opacity-85 transition-opacity" />
         </button>
 
-        {/* Zone 2: 4-6 clean text navigation links (Desktop) */}
+        {/* Menu: Home · Our Story · Private Sessions · Contact (Desktop) */}
         <nav
-          className="hidden lg:flex flex-row items-center gap-[2rem]"
+          className="hidden lg:flex flex-row items-center gap-[1.5rem] xl:gap-[2.25rem]"
           aria-label="Main Navigation"
         >
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.map((item, index) => {
             const isActive = currentPath === item.path;
             return (
-              <button
-                key={item.path}
-                onClick={() => handleNavClick(item.path)}
-                className={`font-sans text-[0.875rem] tracking-[0.05em] transition-colors py-[0.25rem] whitespace-nowrap ${
-                  isActive
-                    ? 'text-ink dark:text-frost font-medium border-b border-ink dark:border-frost'
-                    : 'text-slate dark:text-silver hover:text-ink dark:hover:text-frost'
-                }`}
-              >
-                {item.label}
-              </button>
+              <React.Fragment key={item.path}>
+                <button
+                  onClick={() => handleNavClick(item.path)}
+                  className={`font-sans text-[0.875rem] tracking-[0.05em] transition-colors py-[0.25rem] whitespace-nowrap ${
+                    isActive
+                      ? 'text-ink dark:text-frost font-medium border-b border-ink dark:border-frost'
+                      : 'text-slate dark:text-silver hover:text-ink dark:hover:text-frost'
+                  }`}
+                >
+                  {item.label}
+                </button>
+                {index < NAV_ITEMS.length - 1 && (
+                  <span className="text-slate/40 dark:text-silver/40 text-[0.875rem] select-none" aria-hidden="true">
+                    ·
+                  </span>
+                )}
+              </React.Fragment>
             );
           })}
         </nav>
 
-        {/* Zone 3: Actions - Theme Toggle + Primary CTA */}
+        {/* Actions: Theme Toggle + Button: Book Your Introductory Session */}
         <div className="flex flex-row items-center gap-[1rem]">
           {/* Theme Toggle Button */}
           <button
@@ -125,13 +131,10 @@ export const Header: React.FC = () => {
             )}
           </button>
 
-          {/* Primary CTA (Desktop) */}
-          <button
-            onClick={() => handleNavClick('/getting-started')}
-            className="hidden sm:inline-flex items-center justify-center px-[1.25rem] py-[0.5rem] text-[0.75rem] font-medium tracking-[0.15em] uppercase transition-colors bg-ink text-frost hover:bg-charcoal dark:bg-frost dark:text-ink dark:hover:bg-stone whitespace-nowrap focus:outline-none focus-visible:ring-1 focus-visible:ring-slate"
-          >
-            Get Started
-          </button>
+          {/* Top Nav Button: Book Your Introductory Session */}
+          <div className="hidden sm:block">
+            <BookingButton variant="nav" />
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -141,7 +144,6 @@ export const Header: React.FC = () => {
             className="lg:hidden p-[0.5rem] border border-silver/40 dark:border-slate/60 text-slate dark:text-silver hover:text-ink dark:hover:text-frost focus:outline-none focus-visible:ring-1 focus-visible:ring-slate"
           >
             {mobileMenuOpen ? (
-              /* Close Icon */
               <svg
                 className="w-[1.25rem] h-[1.25rem]"
                 viewBox="0 0 24 24"
@@ -155,7 +157,6 @@ export const Header: React.FC = () => {
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             ) : (
-              /* Hamburger Icon */
               <svg
                 className="w-[1.25rem] h-[1.25rem]"
                 viewBox="0 0 24 24"
@@ -210,14 +211,11 @@ export const Header: React.FC = () => {
               </span>
             </button>
 
-            <button
-              onClick={() => handleNavClick('/getting-started')}
-              className="w-full text-center py-[0.875rem] text-[0.8125rem] font-medium tracking-[0.15em] uppercase bg-ink text-frost dark:bg-frost dark:text-ink transition-colors"
-            >
-              Get Started
-            </button>
+            <div className="w-full">
+              <BookingButton className="w-full text-center" />
+            </div>
             <p className="text-[0.75rem] text-slate dark:text-silver text-center font-sans tracking-[0.05em]">
-              6000 Saint Catherine’s Lane, Lorton, VA
+              Lorton, Virginia
             </p>
           </div>
         </div>

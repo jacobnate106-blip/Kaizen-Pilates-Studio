@@ -76,7 +76,7 @@ export const GettingStartedFAQ: React.FC = () => {
             return (
               <div key={item.id} className="transition-colors hover:bg-stone/20 dark:hover:bg-ink/30">
                 <button
-                  onClick={() => toggleFAQ(item.id)}
+                  onClick={() => toggleFAQ(item.id || item.question)}
                   aria-expanded={isOpen}
                   className="w-full py-[1.75rem] px-[1rem] md:px-[1.5rem] flex flex-row items-center justify-between text-left gap-[1.5rem] focus:outline-none focus-visible:ring-1 focus-visible:ring-slate"
                 >

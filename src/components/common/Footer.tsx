@@ -1,158 +1,194 @@
 import React from 'react';
 import { useRouter } from '../../context/RouterContext';
-import { ArchMotif } from './ArchMotif';
-import { BrandLogo } from './BrandLogo';
-import { RoutePath } from '../../types';
 
-export const Footer: React.FC = () => {
+interface FooterProps {
+  // Page-specific footer variant support per client brief
+  page?: 'home' | 'our-story' | 'private-sessions' | 'contact' | 'policies';
+}
+
+export const Footer: React.FC<FooterProps> = ({ page = 'home' }) => {
   const { navigate } = useRouter();
 
-  const handleNavClick = (path: RoutePath) => {
+  const handleNavClick = (path: string) => {
     navigate(path);
   };
 
   return (
     <footer className="w-full bg-ink text-silver border-t border-charcoal transition-colors">
-      <div className="w-full max-w-[90rem] mx-auto px-[1.5rem] md:px-[3rem] py-[4rem] flex flex-col gap-[3.5rem]">
-        {/* Top Tier: Brand Statement & Logo */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-[2rem] pb-[2.5rem] border-b border-charcoal/80">
-          <div className="flex flex-col gap-[1rem] max-w-[36rem]">
-            <button
-              onClick={() => handleNavClick('/')}
-              className="text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-silver self-start"
-              aria-label="KAIZEN Pilates Studios Home"
-            >
-              <BrandLogo className="h-12 md:h-14 w-auto text-frost" />
-            </button>
-            <p className="font-serif text-[1.25rem] text-stone italic">
-              Precision. Progress. Calm.
-            </p>
-            <p className="text-[0.875rem] font-sans text-silver/70 leading-[1.6]">
-              Small, precise changes repeated with intention until they become meaningful progress.
-              A quiet, considered space to move in Lorton, Virginia.
-            </p>
-          </div>
-
-          <div className="flex flex-col items-start md:items-end gap-[0.5rem]">
-            <ArchMotif className="w-12 h-20 text-slate" />
-            <span className="text-[0.75rem] tracking-[0.2em] uppercase font-sans text-silver/50">
-              改善 · Kaizen
-            </span>
-          </div>
+      <div className="w-full max-w-[90rem] mx-auto px-[1.5rem] md:px-[3rem] py-[4rem] flex flex-col gap-[3rem]">
+        {/* Brand Lockup */}
+        <div className="flex flex-col gap-[0.5rem] max-w-[36rem]">
+          <h2 className="font-serif text-[1.5rem] md:text-[1.75rem] text-frost tracking-[0.03em] font-normal">
+            KAIZEN Pilates Studio
+          </h2>
+          <p className="font-sans text-[0.9375rem] text-silver/80">
+            Private classical Pilates in Lorton, Virginia.
+          </p>
+          <p className="font-serif text-[1.125rem] text-stone font-medium">
+            Precision. Progress. Calm.
+          </p>
         </div>
 
-        {/* Middle Tier: Navigation, Studio Info, Hours & Policies */}
-        <div className="flex flex-col md:flex-row justify-between gap-[2.5rem]">
-          {/* Studio Location & Contact */}
-          <div className="flex flex-col gap-[1rem] flex-1">
-            <span className="text-[0.75rem] tracking-[0.2em] uppercase font-sans text-stone font-medium">
-              Studio Location
-            </span>
-            <div className="flex flex-col gap-[0.375rem] text-[0.875rem] font-sans text-silver">
-              <p className="text-frost font-medium">KAIZEN Pilates Studio</p>
-              <p>6000 Saint Catherine’s Lane</p>
-              <p>Lorton, VA 22079</p>
-            </div>
-            <div className="flex flex-col gap-[0.25rem] pt-[0.5rem] text-[0.875rem] font-sans">
-              <a
-                href="tel:+17033036404"
-                className="text-silver hover:text-frost transition-colors"
-              >
-                +1 703-303-6404
-              </a>
-              <a
-                href="mailto:info@kaizenpilatesstudio.com"
-                className="text-silver hover:text-frost transition-colors"
-              >
-                info@kaizenpilatesstudio.com
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Navigation Links */}
-          <div className="flex flex-col gap-[1rem] flex-1">
+        {/* Links & Contact */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-[2.5rem] pt-[1rem] border-t border-charcoal/80">
+          {/* Explore / Navigation */}
+          <div className="flex flex-col gap-[1rem]">
             <span className="text-[0.75rem] tracking-[0.2em] uppercase font-sans text-stone font-medium">
               Explore
             </span>
-            <nav className="flex flex-col gap-[0.625rem] text-[0.875rem] font-sans" aria-label="Footer Navigation">
-              <button
-                onClick={() => handleNavClick('/')}
-                className="text-left text-silver hover:text-frost transition-colors"
-              >
-                Home
-              </button>
-              <button
-                onClick={() => handleNavClick('/who-we-are')}
-                className="text-left text-silver hover:text-frost transition-colors"
-              >
-                Who We Are
-              </button>
-              <button
-                onClick={() => handleNavClick('/schedule')}
-                className="text-left text-silver hover:text-frost transition-colors"
-              >
-                Schedule
-              </button>
-              <button
-                onClick={() => handleNavClick('/studio-policies')}
-                className="text-left text-silver hover:text-frost transition-colors"
-              >
-                Studio Policies
-              </button>
-              <button
-                onClick={() => handleNavClick('/getting-started')}
-                className="text-left text-silver hover:text-frost transition-colors"
-              >
-                Getting Started
-              </button>
-              <button
-                onClick={() => handleNavClick('/contact')}
-                className="text-left text-silver hover:text-frost transition-colors"
-              >
-                Contact
-              </button>
-            </nav>
+
+            {/* Render exact navigation links per client specification */}
+            {page === 'private-sessions' ? (
+              // Page 3 Footer: Home · Our Story · Private Sessions · Contact · Studio Policies
+              <div className="flex flex-wrap items-center gap-x-[0.75rem] gap-y-[0.5rem] text-[0.875rem] font-sans text-silver">
+                <button
+                  onClick={() => handleNavClick('/')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Home
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/our-story')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Our Story
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/private-sessions')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Private Sessions
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/contact')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Contact
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/studio-policies')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Studio Policies
+                </button>
+              </div>
+            ) : page === 'contact' ? (
+              // Page 4 Footer: Home · Our Story · Private Sessions · Studio Policies · Contact
+              <div className="flex flex-wrap items-center gap-x-[0.75rem] gap-y-[0.5rem] text-[0.875rem] font-sans text-silver">
+                <button
+                  onClick={() => handleNavClick('/')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Home
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/our-story')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Our Story
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/private-sessions')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Private Sessions
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/studio-policies')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Studio Policies
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/contact')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Contact
+                </button>
+              </div>
+            ) : (
+              // Home / Our Story / Studio Policies Footer:
+              // Our Story · Private Sessions · Getting Started · Contact · Studio Policies
+              <div className="flex flex-wrap items-center gap-x-[0.75rem] gap-y-[0.5rem] text-[0.875rem] font-sans text-silver">
+                <button
+                  onClick={() => handleNavClick('/our-story')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Our Story
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/private-sessions')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Private Sessions
+                </button>
+                <span className="text-silver/40">·</span>
+                {/* Getting Started anchor link to Your First Session per client prompt */}
+                <button
+                  onClick={() => handleNavClick('/#your-first-session')}
+                  className="hover:text-frost transition-colors text-left"
+                  title="Anchors to Your First Session section on Home page"
+                >
+                  Getting Started
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/contact')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Contact
+                </button>
+                <span className="text-silver/40">·</span>
+                <button
+                  onClick={() => handleNavClick('/studio-policies')}
+                  className="hover:text-frost transition-colors text-left"
+                >
+                  Studio Policies
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Core Philosophy Pillar */}
-          <div className="flex flex-col gap-[1rem] flex-1 max-w-[20rem]">
+          {/* Get in Touch */}
+          <div className="flex flex-col gap-[0.75rem]">
             <span className="text-[0.75rem] tracking-[0.2em] uppercase font-sans text-stone font-medium">
-              Three Principles
+              Get in Touch
             </span>
-            <div className="flex flex-col gap-[0.75rem] text-[0.8125rem] font-sans">
-              <div>
-                <span className="text-frost font-medium block">Precision</span>
-                <span className="text-silver/70">Every movement placed and controlled.</span>
-              </div>
-              <div>
-                <span className="text-frost font-medium block">Progress</span>
-                <span className="text-silver/70">Measured over weeks, not single sessions.</span>
-              </div>
-              <div>
-                <span className="text-frost font-medium block">Calm</span>
-                <span className="text-silver/70">A quiet, considered space to work in.</span>
-              </div>
+            <div className="flex flex-col gap-[0.375rem] text-[0.875rem] font-sans text-silver">
+              <a
+                href="mailto:luwam@kaizenpilatesstudio.com"
+                className="hover:text-frost transition-colors text-left underline underline-offset-4 decoration-stone/50 hover:decoration-frost"
+              >
+                luwam@kaizenpilatesstudio.com
+              </a>
+              {page !== 'contact' && (
+                <p className="text-silver/80 flex items-center gap-2">
+                  <span>Phone:</span>
+                  <span className="font-sans text-frost">TBD</span>
+                </p>
+              )}
             </div>
           </div>
         </div>
 
-        {/* Bottom Tier: Copyright & Disclaimers */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-[1rem] pt-[2rem] border-t border-charcoal/60 text-[0.75rem] font-sans text-silver/60">
-          <p>© 2026 KAIZEN Pilates Studio. All rights reserved.</p>
-          <div className="flex flex-row items-center gap-[1.5rem]">
-            <button
-              onClick={() => handleNavClick('/studio-policies')}
-              className="hover:text-frost transition-colors"
-            >
-              Policies & Etiquette
-            </button>
-            <button
-              onClick={() => handleNavClick('/contact')}
-              className="hover:text-frost transition-colors"
-            >
-              Lorton, VA Studio
-            </button>
-          </div>
+        {/* Subtle Bottom Line */}
+        <div className="pt-[1.5rem] border-t border-charcoal/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-[1rem] text-[0.75rem] font-sans text-silver/50">
+          <p>© {new Date().getFullYear()} KAIZEN Pilates Studio. Lorton, Virginia.</p>
+          <button
+            onClick={() => handleNavClick('/studio-policies')}
+            className="hover:text-frost transition-colors"
+          >
+            Studio Policies
+          </button>
         </div>
       </div>
     </footer>

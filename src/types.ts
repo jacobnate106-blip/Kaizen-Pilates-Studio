@@ -1,7 +1,9 @@
 export type RoutePath =
   | '/'
-  | '/who-we-are'
-  | '/schedule'
+  | '/our-story'
+  | '/who-we-are' // preserved for backward-compatibility redirect
+  | '/private-sessions'
+  | '/schedule' // preserved
   | '/studio-policies'
   | '/getting-started'
   | '/contact';
@@ -13,14 +15,16 @@ export interface NavItem {
   path: RoutePath;
 }
 
-export interface ScheduleSession {
-  id: string;
-  day: string;
-  time: string;
-  title: string;
-  focus: string;
-  duration: string;
-  level: string;
+export interface PricingOption {
+  option: string;
+  price: string;
+  expiration: string;
+}
+
+export interface FAQItem {
+  id?: string;
+  question: string;
+  answer: string;
 }
 
 export interface PolicyItem {
@@ -30,8 +34,12 @@ export interface PolicyItem {
   details: string;
 }
 
-export interface FAQItem {
+export interface ScheduleSession {
   id: string;
-  question: string;
-  answer: string;
+  day: string;
+  time: string;
+  title: string;
+  focus: string;
+  duration: string;
+  level: string;
 }

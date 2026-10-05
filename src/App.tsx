@@ -4,10 +4,9 @@ import { RouterProvider, useRouter } from './context/RouterContext';
 import { Header } from './components/common/Header';
 import { Footer } from './components/common/Footer';
 import { HomePage } from './pages/HomePage';
-import { WhoWeArePage } from './pages/WhoWeArePage';
-import { SchedulePage } from './pages/SchedulePage';
+import { OurStoryPage } from './pages/OurStoryPage';
+import { PrivateSessionsPage } from './pages/PrivateSessionsPage';
 import { StudioPoliciesPage } from './pages/StudioPoliciesPage';
-import { GettingStartedPage } from './pages/GettingStartedPage';
 import { ContactPage } from './pages/ContactPage';
 
 const AppContent: React.FC = () => {
@@ -15,27 +14,44 @@ const AppContent: React.FC = () => {
 
   const renderCurrentPage = () => {
     switch (currentPath) {
+      case '/our-story':
       case '/who-we-are':
-        return <WhoWeArePage />;
+        return <OurStoryPage />;
+      case '/private-sessions':
       case '/schedule':
-        return <SchedulePage />;
+        return <PrivateSessionsPage />;
       case '/studio-policies':
         return <StudioPoliciesPage />;
-      case '/getting-started':
-        return <GettingStartedPage />;
       case '/contact':
         return <ContactPage />;
       case '/':
+      case '/getting-started':
       default:
         return <HomePage />;
     }
+  };
+
+  const getFooterVariant = () => {
+    if (currentPath === '/private-sessions' || currentPath === '/schedule') {
+      return 'private-sessions';
+    }
+    if (currentPath === '/contact') {
+      return 'contact';
+    }
+    if (currentPath === '/our-story' || currentPath === '/who-we-are') {
+      return 'our-story';
+    }
+    if (currentPath === '/studio-policies') {
+      return 'policies';
+    }
+    return 'home';
   };
 
   return (
     <div className="flex flex-col min-h-screen w-full bg-frost dark:bg-ink text-ink dark:text-frost selection:bg-stone selection:text-ink font-sans transition-colors duration-300">
       <Header />
       <main className="flex-1 w-full flex flex-col">{renderCurrentPage()}</main>
-      <Footer />
+      <Footer page={getFooterVariant()} />
     </div>
   );
 };
